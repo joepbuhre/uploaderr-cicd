@@ -66,7 +66,7 @@ jobs:
             # Essentially just ignore the cache output (PR can't write to registry cache)
             echo "cache-to=type=local,dest=/tmp/discard,ignore-error=true" >> $GITHUB_OUTPUT
           else
-            echo "cache-to=type=registry,mode=max,ref=ghcr.io/${{ github.repository_owner }}/uploaderr-build-cache:uploaderr-cicd" >> $GITHUB_OUTPUT
+            echo "cache-to=type=registry,mode=max,ref=ghcr.io/${{ github.repository_owner }}/uploaderr-build-cache:${{github.repository}}" >> $GITHUB_OUTPUT
           fi
 
       - name: Build and push image
@@ -74,7 +74,7 @@ jobs:
         with:
           # Skip pushing when PR from a fork
           push: ${{ !github.event.pull_request.head.repo.fork }}
-          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/uploaderr-build-cache:uploaderr-cicd
+          cache-from: type=registry,ref=ghcr.io/${{ github.repository_owner }}/uploaderr-build-cache:${{github.repository}}
           cache-to: ${{ steps.cache-target.outputs.cache-to }}
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
