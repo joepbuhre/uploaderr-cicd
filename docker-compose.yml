@@ -1,0 +1,11 @@
+version: '3'
+services:
+  uploaderr:
+    container_name: uploaderr
+    image: uploaderr:latest
+    env_file:
+      - .env
+    ports:
+      - "25:25"
+      - "8080:8080"
+      - "8081:5174"
